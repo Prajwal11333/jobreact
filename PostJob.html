@@ -1,0 +1,85 @@
+        <div id="post-job" class="page-section">
+            <div class="page-content">
+                <div class="jobs-header">
+                    <h1>Post an Inclusive Job</h1>
+                    <p>Create opportunities that welcome talent from all backgrounds</p>
+                </div>
+
+                <div class="search-container">
+                    <form id="post-job-form">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="company-name">Company Name *</label>
+                                <input type="text" id="company-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="job-position">Job Title *</label>
+                                <input type="text" id="job-position" required>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="job-location">Location *</label>
+                                <input type="text" id="job-location" placeholder="e.g. Bangalore, Remote" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="employment-type">Employment Type *</label>
+                                <select id="employment-type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="full-time">Full Time</option>
+                                    <option value="part-time">Part Time</option>
+                                    <option value="contract">Contract</option>
+                                    <option value="freelance">Freelance</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="job-desc">Job Description *</label>
+                            <textarea id="job-desc" rows="6" placeholder="Describe the role, responsibilities, and requirements..." required style="width: 100%; padding: 1rem; border: 2px solid #e1e5e9; border-radius: 12px; font-family: inherit; resize: vertical;"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accessibility-features">Accessibility Features</label>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="wheelchair-accessible"> Wheelchair Accessible
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="hearing-support"> Hearing Support Available
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="vision-support"> Vision Support Available
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="flexible-hours"> Flexible Working Hours
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="remote-work"> Remote Work Options
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="assistive-tech"> Assistive Technology Provided
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="salary-range">Salary Range</label>
+                                <input type="text" id="salary-range" placeholder="e.g. ₹5,00,000 - ₹8,00,000">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Contact Email *</label>
+                                <input type="email" id="contact-email" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn primary-btn" style="margin-top: 1rem;">
+                            <i class="fas fa-paper-plane"></i>
+                            Post Job
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
