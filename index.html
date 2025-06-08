@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccessWork - Inclusive Job Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between; /* Fixed: was 'between' */
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin-left: auto;
+            margin-right: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .login-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .signup-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .signup-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .primary-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .secondary-btn:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        /* Quick Search Section */
+        .quick-search {
+            background: white;
+            padding: 4rem 0;
+            margin-top: -3rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .search-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr auto;
+            gap: 1.5rem;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select {
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 4rem;
+            color: #333;
+            position: relative;
+        }
+
+        .features h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Statistics Section */
+        .stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="white" opacity="0.05"/></svg>') repeat;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #f1f3f4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-item p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            padding: 8rem 0;
+            background: white;
+        }
+
+        .success-stories h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 4rem;
+            color: #333;
+            position: relative;
+        }
+
+        .success-stories h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 2px;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .story-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border-left: 5px solid #ff6b6b;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            font-size: 4rem;
+            color: #ff6b6b;
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .story-card blockquote {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-author {
+            font-weight: 600;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .story-author::before {
+            content: '—';
+            color: #ff6b6b;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></svg>') repeat;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            margin-top: 2rem;
+            color: #bdc3c7;
+        }
+
+        /* Page Sections (Hidden by default) */
+        .page-section {
+            display: none;
+            min-height: calc(100vh - 160px);
+            padding: 120px 0 40px;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Jobs Page */
+        .jobs-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .jobs-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .jobs-filters {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-company {
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .job-tag {
+            background: #f8f9fa;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .job-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .apply-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .save-btn {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-buttons .btn {
+                width: 200px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .feature-grid,
+            .story-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .job-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Accessibility Enhancements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* Focus styles for better accessibility */
+        *:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        .btn:focus,
+        .nav-btn:focus,
+        input:focus,
+        select:focus {
+            outline: 3px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .hero {
+                background: #000;
+            }
+            
+            .btn {
+                border: 2px solid currentColor;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Color blind friendly indicators */
+        .accessibility-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .remote-friendly { background: #28a745; }
+        .wheelchair-accessible { background: #007bff; }
+        .hearing-support { background: #ffc107; }
+        .vision-support { background: #6f42c1; }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('main')">
+                <i class="fas fa-universal-access"></i>
+                AccessWork
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showPage('jobs')">Find Jobs</a></li>
+                <li><a href="#" onclick="showPage('post-job')">Post Job</a></li>
+                <li><a href="#" onclick="showPage('resources')">Resources</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="#" class="nav-btn login-btn" onclick="openModal('loginModal')">Login</a>
+                <a href="#" class="nav-btn signup-btn" onclick="openModal('signupModal')">Sign Up</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Home Page -->
+        <div id="main" class="page-section active">
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Inclusive Opportunities for Everyone</h1>
+                        <p>Connecting talented individuals with disabilities to meaningful careers and supportive employers</p>
+                        <div class="hero-buttons">
+                            <a href="#" class="btn primary-btn" onclick="showPage('jobs')">
+                                <i class="fas fa-search"></i>
+                                Find Jobs
+                            </a>
+                            <a href="#" class="btn secondary-btn" onclick="showPage('post-job')">
+                                <i class="fas fa-plus"></i>
+                                Post a Job
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quick-search">
+                <div class="container">
+                    <div class="search-container">
+                        <form class="search-form" id="quick-job-search">
+                            <div class="form-group">
+                                <label for="job-title">Job Title</label>
+                                <input type="text" id="job-title" placeholder="e.g. Web Developer, Customer Support" aria-describedby="job-title-help">
+                                <div id="job-title-help" class="sr-only">Enter the job title you're looking for</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" placeholder="e.g. Bangalore, Remote" aria-describedby="location-help">
+                                <div id="location-help" class="sr-only">Enter your preferred location</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="job-type">Job Type</label>
+                                <select id="job-type" aria-describedby="job-type-help">
+                                    <option value="">All Types</option>
+                                    <option value="full-time">Full Time</option>
+                                    <option value="part-time">Part Time</option>
+                                    <option value="remote">Remote</option>
+                                    <option value="freelance">Freelance</option>
+                                </select>
+                                <div id="job-type-help" class="sr-only">Select your preferred job type</div>
+                            </div>
+                            <button type="submit" class="search-btn" aria-describedby="search-help">
+                                <i class="fas fa-search"></i>
+                                Search Jobs
+                            </button>
+                            <div id="search-help" class="sr-only">Click to search for jobs</div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="container">
+                    <h2>Why Choose Our Platform?</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-universal-access feature-icon"></i>
+                            <h3>Accessibility First</h3>
+                            <p>All job listings include detailed accessibility information and accommodation details</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-handshake feature-icon"></i>
+                            <h3>Inclusive Employers</h3>
+                            <p>Partner with companies committed to diversity, inclusion, and providing equal opportunities</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                            <h3>Skill Development</h3>
+                            <p>Access free resources, training programs, and skill-building workshops</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-bullseye feature-icon"></i>
+                            <h3>Personalized Matching</h3>
+                            <p>Advanced algorithms match you with jobs that fit your skills and accessibility needs</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-users feature-icon"></i>
+                            <h3>Community Support</h3>
+                            <p>Connect with peers, mentors, and success stories in our supportive community</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-shield-alt feature-icon"></i>
+                            <h3>Privacy Protected</h3>
+                            <p>Your disability information is secure and shared only with your explicit consent</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stats">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h3 data-count="2500">0</h3>
+                            <p>Active Job Listings</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 data-count="850">0</h3>
+                            <p>Inclusive Employers</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 data-count="12000">0</h3>
+                            <p>Successful Placements</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 data-count="95">0</h3>
+                            <p>Job Satisfaction Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="success-stories">
+                <div class="container">
+                    <h2>Success Stories</h2>
+                    <div class="story-grid">
+                        <div class="story-card">
+                            <blockquote>
+                                This platform helped me find a remote software developer position that perfectly accommodates my mobility needs. The company even provided additional assistive technology!
+                            </blockquote>
+                            <div class="story-author">Priya S., Software Developer</div>
+                        </div>
+                        <div class="story-card">
+                            <blockquote>
+                                As a deaf professional, I struggled to find employers who truly understood my communication needs. Here, I found multiple opportunities with sign language support.
+                            </blockquote>
+                            <div class="story-author">Rahul M., Marketing Specialist</div>
+                        </div>
+                        <div class="story-card">
+                            <blockquote>
+                                The skill development resources helped me transition from unemployment to a fulfilling career in data analysis. The community support was incredible!
+                            </blockquote>
+                            <div class="story-author">Anjali K., Data Analyst</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta">
+                <div class="container">
+                    <div class="cta-content">
+                        <h2>Ready to Find Your Next Opportunity?</h2>
+                        <p>Join thousands of professionals who have found meaningful careers through our platform</p>
+                        <a href="#" class="btn secondary-btn" onclick="openModal('signupModal')">
+                            <i class="fas fa-user-plus"></i>
+                            Create Your Profile
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Jobs Page -->
+        <div id="jobs" class="page-section">
+            <div class="page-content">
+                <div class="jobs-header">
+                    <h1>Find Your Perfect Job</h1>
+                    <p>Discover inclusive opportunities that match your skills and accessibility needs</p>
+                </div>
+
+                <div class="jobs-filters">
+                    <div class="filter-row">
+                        <div class="form-group">
+                            <label for="filter-title">Job Title</label>
+                            <input type="text" id="filter-title" placeholder="Search jobs...">
+                        </div>
+                        <div class="form-group">
+                            <label for="filter-location">Location</label>
+                            <select id="filter-location">
+                                <option value="">All Locations</option>
+                                <option value="remote">Remote</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="pune">Pune</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filter-type">Job Type</label>
+                            <select id="filter-type">
+                                <option value="">All Types</option>
+                                <option value="full-time">Full Time</option>
+                                <option value="part-time">Part Time</option>
+                                <option value="contract">Contract</option>
+                                <option value="freelance">Freelance</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filter-accessibility">Accessibility</label>
+                            <select id="filter-accessibility">
+                                <option value="">All Jobs</option>
+                                <option value="wheelchair">Wheelchair Accessible</option>
+                                <option value="hearing">Hearing Support</option>
+                                <option value="vision">Vision Support</option>
+                                <option value="remote-friendly">Remote Friendly</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn primary-btn" onclick="filterJobs()">
+                        <i class="fas fa-filter"></i>
+                        Apply Filters
+                    </button>
+                </div>
+
+                <div id="jobs-container">
+                    <!-- Job listings will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Post Job Page -->
+        <div id="post-job" class="page-section">
+            <div class="page-content">
+                <div class="jobs-header">
+                    <h1>Post an Inclusive Job</h1>
+                    <p>Create opportunities that welcome talent from all backgrounds</p>
+                </div>
+
+                <div class="search-container">
+                    <form id="post-job-form">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="company-name">Company Name *</label>
+                                <input type="text" id="company-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="job-position">Job Title *</label>
+                                <input type="text" id="job-position" required>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="job-location">Location *</label>
+                                <input type="text" id="job-location" placeholder="e.g. Bangalore, Remote" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="employment-type">Employment Type *</label>
+                                <select id="employment-type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="full-time">Full Time</option>
+                                    <option value="part-time">Part Time</option>
+                                    <option value="contract">Contract</option>
+                                    <option value="freelance">Freelance</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="job-desc">Job Description *</label>
+                            <textarea id="job-desc" rows="6" placeholder="Describe the role, responsibilities, and requirements..." required style="width: 100%; padding: 1rem; border: 2px solid #e1e5e9; border-radius: 12px; font-family: inherit; resize: vertical;"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accessibility-features">Accessibility Features</label>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="wheelchair-accessible"> Wheelchair Accessible
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="hearing-support"> Hearing Support Available
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="vision-support"> Vision Support Available
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="flexible-hours"> Flexible Working Hours
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="remote-work"> Remote Work Options
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" value="assistive-tech"> Assistive Technology Provided
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="salary-range">Salary Range</label>
+                                <input type="text" id="salary-range" placeholder="e.g. ₹5,00,000 - ₹8,00,000">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Contact Email *</label>
+                                <input type="email" id="contact-email" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn primary-btn" style="margin-top: 1rem;">
+                            <i class="fas fa-paper-plane"></i>
+                            Post Job
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Page -->
+        <div id="resources" class="page-section">
+            <div class="page-content">
+                <div class="jobs-header">
+                    <h1>Career Resources</h1>
+                    <p>Tools and guides to help you succeed in your career journey</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-file-alt feature-icon"></i>
+                        <h3>Resume Builder</h3>
+                        <p>Create professional resumes that highlight your skills and accommodations</p>
+                        <button class="btn primary-btn" onclick="openModal('comingSoonModal')">
+                            <i class="fas fa-external-link-alt"></i>
+                            Use Tool
+                        </button>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-comments feature-icon"></i>
+                        <h3>Interview Prep</h3>
+                        <p>Practice common interview questions and learn to discuss accommodations</p>
+                        <button class="btn primary-btn" onclick="openModal('comingSoonModal')">
+                            <i class="fas fa-play"></i>
+                            Start Practice
+                        </button>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-graduation-cap feature-icon"></i>
+                        <h3>Skill Courses</h3>
+                        <p>Free online courses to develop in-demand professional skills</p>
+                        <button class="btn primary-btn" onclick="openModal('comingSoonModal')">
+                            <i class="fas fa-book-open"></i>
+                            Browse Courses
+                        </button>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-network-wired feature-icon"></i>
+                        <h3>Mentorship Program</h3>
+                        <p>Connect with experienced professionals in your field</p>
+                        <button class="btn primary-btn" onclick="openModal('comingSoonModal')">
+                            <i class="fas fa-user-friends"></i>
+                            Find Mentor
+                        </button>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-briefcase feature-icon"></i>
+                        <h3>Career Guidance</h3>
+                        <p>One-on-one sessions with career counselors</p>
+                        <button class="btn primary-btn" onclick="openModal('comingSoonModal')">
+                            <i class="fas fa-calendar-alt"></i>
+                            Book Session
+                        </button>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-users feature-icon"></i>
+                        <h3>Community Forum</h3>
+                        <p>Connect with peers and share experiences</p>
+                        <button class="btn primary-btn" onclick="openModal('comingSoonModal')">
+                            <i class="fas fa-comment-dots"></i>
+                            Join Forum
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page-section">
+            <div class="page-content">
+                <div class="jobs-header">
+                    <h1>About AccessWork</h1>
+                    <p>Bridging the gap between talented professionals and inclusive employers</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
+                    <div>
+                        <h2 style="color: #667eea; margin-bottom: 1rem;">Our Mission</h2>
+                        <p style="line-height: 1.7; color: #666;">We believe that disability is not inability. Our mission is to create a world where every talented individual, regardless of their physical or cognitive differences, has equal access to meaningful employment opportunities.</p>
+                        
+                        <h2 style="color: #667eea; margin: 2rem 0 1rem;">Our Vision</h2>
+                        <p style="line-height: 1.7; color: #666;">To be the leading platform that transforms the employment landscape by fostering inclusive workplaces and empowering individuals with disabilities to achieve their career aspirations.</p>
+                    </div>
+                    
+                    <div>
+                        <h2 style="color: #667eea; margin-bottom: 1rem;">Our Impact</h2>
+                        <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: center;">
+                                <div>
+                                    <h3 style="color: #ff6b6b; font-size: 2rem;">12,000+</h3>
+                                    <p>Lives Changed</p>
+                                </div>
+                                <div>
+                                    <h3 style="color: #ff6b6b; font-size: 2rem;">850+</h3>
+                                    <p>Partner Companies</p>
+                                </div>
+                                <div>
+                                    <h3 style="color: #ff6b6b; font-size: 2rem;">95%</h3>
+                                    <p>Success Rate</p>
+                                </div>
+                                <div>
+                                    <h3 style="color: #ff6b6b; font-size: 2rem;">50+</h3>
+                                    <p>Cities Covered</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-heart feature-icon"></i>
+                        <h3>Empathy-Driven</h3>
+                        <p>Every feature is designed with deep understanding of accessibility needs</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-rocket feature-icon"></i>
+                        <h3>Innovation First</h3>
+                        <p>Leveraging cutting-edge technology to break down employment barriers</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-globe feature-icon"></i>
+                        <h3>Global Reach</h3>
+                        <p>Connecting talent and opportunities across geographical boundaries</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page-section">
+            <div class="page-content">
+                <div class="jobs-header">
+                    <h1>Get in Touch</h1>
+                    <p>We're here to help you succeed. Reach out to us anytime.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                    <div class="search-container">
+                        <h3 style="margin-bottom: 1.5rem;">Send us a Message</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="contact-name">Name *</label>
+                                <input type="text" id="contact-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email-form">Email *</label>
+                                <input type="email" id="contact-email-form" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-subject">Subject *</label>
+                                <select id="contact-subject" required>
+                                    <option value="">Select Subject</option>
+                                    <option value="job-seeker">Job Seeker Support</option>
+                                    <option value="employer">Employer Inquiries</option>
+                                    <option value="technical">Technical Issues</option>
+                                    <option value="partnership">Partnership Opportunities</option>
+                                    <option value="feedback">Feedback & Suggestions</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-message">Message *</label>
+                                <textarea id="contact-message" rows="6" required style="width: 100%; padding: 1rem; border: 2px solid #e1e5e9; border-radius: 12px; font-family: inherit; resize: vertical;"></textarea>
+                            </div>
+                            <button type="submit" class="btn primary-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <div class="feature-card" style="margin-bottom: 2rem;">
+                            <i class="fas fa-phone feature-icon"></i>
+                            <h3>Phone Support</h3>
+                            <p>Monday - Friday, 9:00 AM - 6:00 PM IST</p>
+                            <p style="color: #667eea; font-weight: 600;">+91-80-4567-8900</p>
+                        </div>
+
+                        <div class="feature-card" style="margin-bottom: 2rem;">
+                            <i class="fas fa-envelope feature-icon"></i>
+                            <h3>Email Support</h3>
+                            <p>Get response within 24 hours</p>
+                            <p style="color: #667eea; font-weight: 600;">support@accesswork.in</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <i class="fas fa-map-marker-alt feature-icon"></i>
+                            <h3>Office Address</h3>
+                            <p>123 Innovation Hub<br>Koramangala, Bangalore<br>Karnataka 560034, India</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>For Job Seekers</h3>
+                <a href="#" onclick="showPage('jobs')">Browse Jobs</a>
+                <a href="#" onclick="showPage('resources')">Career Resources</a>
+                <a href="#" onclick="openModal('signupModal')">Create Profile</a>
+                <a href="#" onclick="openModal('comingSoonModal')">Upload Resume</a>
+            </div>
+            <div class="footer-section">
+                <h3>For Employers</h3>
+                <a href="#" onclick="showPage('post-job')">Post Jobs</a>
+                <a href="#" onclick="openModal('comingSoonModal')">Employer Dashboard</a>
+                <a href="#" onclick="openModal('comingSoonModal')">Diversity Training</a>
+                <a href="#" onclick="openModal('comingSoonModal')">Accessibility Guide</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="#" onclick="showPage('contact')">Contact Us</a>
+                <a href="#" onclick="openModal('comingSoonModal')">Help Center</a>
+                <a href="#" onclick="openModal('comingSoonModal')">Privacy Policy</a>
+                <a href="#" onclick="openModal('comingSoonModal')">Terms of Service</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <a href="#" style="color: #667eea; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #667eea; font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: #667eea; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color: #667eea; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AccessWork. All rights reserved. | Making employment accessible for everyone.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            <h2 style="margin-bottom: 1.5rem; color: #333;">Welcome Back</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn primary-btn" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+                <p style="text-align: center; margin-top: 1rem; color: #666;">
+                    Don't have an account? 
+                    <a href="#" style="color: #667eea;" onclick="closeModal('loginModal'); openModal('signupModal');">Sign up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('signupModal')">&times;</button>
+            <h2 style="margin-bottom: 1.5rem; color: #333;">Join AccessWork</h2>
+            <form id="signup-form">
+                <div class="filter-row">
+                    <div class="form-group">
+                        <label for="signup-firstname">First Name</label>
+                        <input type="text" id="signup-firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-lastname">Last Name</label>
+                        <input type="text" id="signup-lastname" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="filter-row">
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="user-type">I am a:</label>
+                    <select id="user-type" required>
+                        <option value="">Select user type</option>
+                        <option value="job-seeker">Job Seeker</option>
+                        <option value="employer">Employer</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn primary-btn" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </button>
+                <p style="text-align: center; margin-top: 1rem; color: #666;">
+                    Already have an account? 
+                    <a href="#" style="color: #667eea;" onclick="closeModal('signupModal'); openModal('loginModal');">Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Coming Soon Modal -->
+    <div id="comingSoonModal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <button class="modal-close" onclick="closeModal('comingSoonModal')">&times;</button>
+            <i class="fas fa-rocket" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+            <h2 style="margin-bottom: 1rem; color: #333;">Coming Soon!</h2>
+            <p style="color: #666; margin-bottom: 2rem;">This feature is under development and will be available soon. Stay tuned for updates!</p>
+            <button class="btn primary-btn" onclick="closeModal('comingSoonModal')">
+                <i class="fas fa-check"></i>
+                Got it
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Modal Handling
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Sample job data
+      // Sample job data continued
+const sampleJobs = [
+    {
+        id: 1,
+        title: "Senior Software Engineer",
+        company: "TechCorp Solutions",
+        location: "Bangalore (Remote Friendly)",
+        type: "full-time",
+        description: "We're looking for a passionate software engineer to join our inclusive team. Experience with React, Node.js, and cloud technologies preferred.",
+        accessibility: ["remote-friendly", "wheelchair-accessible", "flexible-hours"],
+        salary: "₹12,00,000 - ₹18,00,000",
+        posted: "2 days ago"
+    },
+    {
+        id: 2,
+        title: "UX Designer",
+        company: "Design Studio Inc",
+        location: "Mumbai",
+        type: "full-time",
+        description: "Join our design team to create accessible and inclusive user experiences. Knowledge of accessibility guidelines (WCAG) is a plus.",
+        accessibility: ["wheelchair-accessible", "vision-support", "hearing-support"],
+        salary: "₹8,00,000 - ₹12,00,000",
+        posted: "1 week ago"
+    },
+    {
+        id: 3,
+        title: "Digital Marketing Specialist",
+        company: "Marketing Pro Agency",
+        location: "Remote",
+        type: "full-time",
+        description: "Drive digital marketing campaigns for diverse clients. Excellent opportunity for creative minds with strong analytical skills.",
+        accessibility: ["remote-friendly", "flexible-hours", "hearing-support"],
+        salary: "₹6,00,000 - ₹9,00,000",
+        posted: "3 days ago"
+    },
+    {
+        id: 4,
+        title: "Data Analyst",
+        company: "Analytics Solutions Ltd",
+        location: "Pune",
+        type: "full-time",
+        description: "Analyze complex datasets to drive business decisions. Proficiency in Python, SQL, and data visualization tools required.",
+        accessibility: ["wheelchair-accessible", "vision-support", "flexible-hours"],
+        salary: "₹7,50,000 - ₹11,00,000",
+        posted: "5 days ago"
+    },
+    {
+        id: 5,
+        title: "Content Writer",
+        company: "Content Creators Hub",
+        location: "Remote",
+        type: "freelance",
+        description: "Create engaging content for various digital platforms. Perfect for creative writers with SEO knowledge.",
+        accessibility: ["remote-friendly", "flexible-hours"],
+        salary: "₹25,000 - ₹50,000 per project",
+        posted: "1 day ago"
+    },
+    {
+        id: 6,
+        title: "HR Manager",
+        company: "PeopleFirst Inc",
+        location: "Delhi",
+        type: "full-time",
+        description: "Lead our HR initiatives with focus on diversity and inclusion. Experience in creating inclusive workplace policies required.",
+        accessibility: ["wheelchair-accessible", "hearing-support", "vision-support"],
+        salary: "₹10,00,000 - ₹15,00,000",
+        posted: "4 days ago"
+    }
+];
+
+// Render job listings
+function renderJobs(jobs) {
+    const container = document.getElementById('jobs-container');
+    container.innerHTML = '';
+    
+    if (jobs.length === 0) {
+        container.innerHTML = `
+            <div class="no-jobs" style="text-align: center; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+                <i class="fas fa-search" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                <h3>No jobs found matching your criteria</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
+        `;
+        return;
+    }
+    
+    jobs.forEach(job => {
+        const accessibilityIcons = job.accessibility.map(acc => {
+            let icon = '';
+            let label = '';
+            switch(acc) {
+                case 'remote-friendly':
+                    icon = 'fa-wifi';
+                    label = 'Remote Friendly';
+                    break;
+                case 'wheelchair-accessible':
+                    icon = 'fa-wheelchair';
+                    label = 'Wheelchair Accessible';
+                    break;
+                case 'hearing-support':
+                    icon = 'fa-assistive-listening-systems';
+                    label = 'Hearing Support';
+                    break;
+                case 'vision-support':
+                    icon = 'fa-eye';
+                    label = 'Vision Support';
+                    break;
+                case 'flexible-hours':
+                    icon = 'fa-clock';
+                    label = 'Flexible Hours';
+                    break;
+            }
+            return `<span class="job-tag"><i class="fas ${icon}"></i> ${label}</span>`;
+        }).join('');
+        
+        container.innerHTML += `
+            <div class="job-card">
+                <div class="job-header">
+                    <div>
+                        <h3 class="job-title">${job.title}</h3>
+                        <p class="job-company">${job.company} • ${job.location}</p>
+                    </div>
+                    <div class="job-salary">${job.salary}</div>
+                </div>
+                <div class="job-meta">
+                    <span class="job-tag">${job.type.replace('-', ' ')}</span>
+                    ${accessibilityIcons}
+                    <span class="job-tag"><i class="far fa-clock"></i> ${job.posted}</span>
+                </div>
+                <p class="job-description">${job.description}</p>
+                <div class="job-actions">
+                    <button class="apply-btn" onclick="applyForJob(${job.id})">
+                        <i class="fas fa-paper-plane"></i> Apply Now
+                    </button>
+                    <button class="save-btn" onclick="saveJob(${job.id})">
+                        <i class="far fa-bookmark"></i> Save Job
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Filter jobs
+function filterJobs() {
+    const title = document.getElementById('filter-title').value.toLowerCase();
+    const location = document.getElementById('filter-location').value;
+    const type = document.getElementById('filter-type').value;
+    const accessibility = document.getElementById('filter-accessibility').value;
+    
+    const filteredJobs = sampleJobs.filter(job => {
+        const matchesTitle = job.title.toLowerCase().includes(title);
+        const matchesLocation = location === '' || job.location.toLowerCase().includes(location.toLowerCase());
+        const matchesType = type === '' || job.type === type;
+        const matchesAccessibility = accessibility === '' || job.accessibility.includes(accessibility);
+        
+        return matchesTitle && matchesLocation && matchesType && matchesAccessibility;
+    });
+    
+    renderJobs(filteredJobs);
+}
+
+// Apply for job
+function applyForJob(jobId) {
+    const job = sampleJobs.find(j => j.id === jobId);
+    alert(`Application started for: ${job.title} at ${job.company}\n\nYou'll be redirected to the application page.`);
+}
+
+// Save job
+function saveJob(jobId) {
+    const job = sampleJobs.find(j => j.id === jobId);
+    alert(`Job saved: ${job.title} at ${job.company}\n\nYou can view saved jobs in your profile.`);
+}
+
+// Form Submissions
+document.getElementById('quick-job-search').addEventListener('submit', (e) => {
+    e.preventDefault();
+    showPage('jobs');
+    filterJobs();
+});
+
+document.getElementById('post-job-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Job posted successfully! It will be visible after approval.');
+    showPage('jobs');
+});
+
+document.getElementById('contact-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Thank you for your message! We will contact you soon.');
+    document.getElementById('contact-form').reset();
+});
+
+document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Login successful! Redirecting to your dashboard...');
+    closeModal('loginModal');
+});
+
+document.getElementById('signup-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const password = document.getElementById('signup-password').value;
+    const confirm = document.getElementById('signup-confirm').value;
+    
+    if (password !== confirm) {
+        alert('Passwords do not match!');
+        return;
+    }
+    
+    alert('Account created successfully! Welcome to AccessWork.');
+    closeModal('signupModal');
+});
+
+// Statistics Counter Animation
+function animateCounters() {
+    const counters = document.querySelectorAll('[data-count]');
+    
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-count');
+        const duration = 2000;
+        const increment = target / duration * 10;
+        let current = 0;
+        
+        const updateCounter = () => {
+            current += increment;
+            if (current < target) {
+                counter.innerText = Math.ceil(current);
+                setTimeout(updateCounter, 10);
+            } else {
+                counter.innerText = target;
+            }
+        };
+        
+        updateCounter();
+    });
+}
+
+// Initialize when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    // Render sample jobs on jobs page
+    renderJobs(sampleJobs);
+    
+    // Initialize statistics animation
+    animateCounters();
+    
+    // Add mobile menu toggle for small screens
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            document.querySelector('.nav-menu').style.display = 'flex';
+        } else {
+            document.querySelector('.nav-menu').style.display = 'none';
+        }
+    });
+});
+
+// Page Navigation
+function showPage(pageId) {
+    document.querySelectorAll('.page-section').forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+// Modal Handling
+function openModal(modalId) {
+    document.getElementById(modalId).classList.add('active');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+}
+
+// Close modals when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) {
+        e.target.classList.remove('active');
+    }
+});
+
+// Mobile Menu Toggle
+function toggleMobileMenu() {
+    const menu = document.querySelector('.nav-menu');
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+</script>
+</body>
+</html>
