@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/home.jsx';
 import Jobs from './pages/Jobs';
 import PostJob from './pages/PostJob';
-import Resources from './pages/Resources.jsx/index.js';
+import Resources from './pages/Resources.jsx';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Footer from './components/Footer';
