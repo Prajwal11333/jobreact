@@ -28,19 +28,10 @@ const Navbar = ({ currentPage, showPage, openModal }) => {
           <li>
             <a 
               href="#" 
-              onClick={(e) => { e.preventDefault(); handleNavClick('jobs'); }}
-              className={currentPage === 'jobs' ? 'active' : ''}
+              onClick={(e) => { e.preventDefault(); handleNavClick('nearme-jobs'); }}
+              className={currentPage === 'nearme-jobs' ? 'active' : ''}
             >
-              Find Jobs
-            </a>
-          </li>
-          <li>
-            <a 
-              href="#" 
-              onClick={(e) => { e.preventDefault(); handleNavClick('post-job'); }}
-              className={currentPage === 'post-job' ? 'active' : ''}
-            >
-              Post Job
+              NearmeJobs
             </a>
           </li>
           <li>
